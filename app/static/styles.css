@@ -1,0 +1,51 @@
+body {
+    padding-top: 70px; 
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; 
+}
+
+.navbar {
+    background-color: #007bff; 
+}
+
+.navbar-brand, .navbar-nav .nav-link {
+    color: #ffffff !important; 
+}
+
+.container {
+    padding: 20px;
+    max-width: 100%; 
+    margin: 0 auto; 
+}
+
+.result-table {
+    margin-top: 20px;
+    overflow-x: auto; 
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.btn-predict {
+    margin-top: 10px;
+}
+
+#prediction-result {
+    margin-top: 20px;
+}
+
+.caption {
+    font-size: 24px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.institusi {
+    font-size: 16px;
+}
+
+.btn-custom {
+    background-color: #007bff;
+    border-color: #007bff;
+}

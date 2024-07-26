@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../static/img/web/usu.png" />
+    <title>Program Tugas Akhir</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Perpetua ', Georgia, serif;
+        }
+        /* CSS untuk memberikan jarak antara navbar dan bagian beranda */
+        #beranda {
+            padding-top: 70px; /* Sesuaikan nilai padding-top sesuai kebutuhan Anda */
+        }
+        #train {
+            padding-top: 70px; /* Sesuaikan nilai padding-top sesuai kebutuhan Anda */
+        }
+        #test {
+            padding-top: 70px; /* Sesuaikan nilai padding-top sesuai kebutuhan Anda */
+        }
+        #predict {
+            padding-top: 70px; /* Sesuaikan nilai padding-top sesuai kebutuhan Anda */
+        }
+        #predict {
+            padding-bottom: 70px; /* Sesuaikan nilai padding-top sesuai kebutuhan Anda */
+        }
+        .navbar {
+            transition: top 0.5s;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+    
+        .navbar-scroll-hide {
+            top: -70px;
+        }
+    
+        .navbar-scroll-show {
+            top: 0;
+        }
+        .report-section {
+            margin-bottom: 30px;
+        }
+        .report-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .conf-matrix {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .conf-matrix img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .img-fluid {
+            max-width: 100%;
+            height: 100%%;
+        }
+        .img-container {
+            width: 100%;
+            max-width: 500px; /* Menentukan lebar maksimum container */
+            margin: auto; /* Agar container berada di tengah */
+        }
+
+        .img-container img {
+            width: 100%;
+            height: auto; /* Memastikan gambar berskala dengan proporsional */
+            display: block; /* Menghapus spasi di bawah gambar */
+        }
+    </style>
+</head>
+<body data-spy="scroll" data-target="#spy" data-offset="500">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm navbar-lg">
+        <div class="container">
+            <h4 class="navbar-brand me-auto">Program Tugas Akhir</h4>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#beranda">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#train">Training</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#test">Testing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#predict">Prediksi</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <script>
+            var lastScrollTop = 0;
+            window.addEventListener("scroll", function () {
+                var currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+                if (currentScroll > lastScrollTop) {
+                    document.querySelector(".navbar").classList.add("navbar-scroll-hide");
+                    document.querySelector(".navbar").classList.remove("navbar-scroll-show");
+                } else {
+                    document.querySelector(".navbar").classList.remove("navbar-scroll-hide");
+                    document.querySelector(".navbar").classList.add("navbar-scroll-show");
+                }
+                lastScrollTop = currentScroll;
+            });
+        </script>
+    </nav>
+    
+    <section id="beranda">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 pr-md-5">
+                    <h2 class="judul mb-4">PENCOCOKAN PELANGGARAN UU ITE DALAM KEJAHATAN SIBER MENGGUNAKAN ALGORITMA SUPPORT VECTOR MACHINE</h2>
+                    <h5><strong>Kevin Aryanda Yeremia Bangun - 201402124</strong></h5>
+                    <div class="py-4">
+                        <a href="#train" class="btn btn-primary btn-lg">Training & Testing</a>
+                    </div>
+                    <h5 class="institusi mb-5">
+                        Program Studi S1 Teknologi Informasi<br>
+                        Fakultas Ilmu Komputer dan Teknologi Informasi<br>
+                        Universitas Sumatera Utara<br>
+                        2024
+                    </h5>
+                </div>
+                <div class="col-md-5">
+                    <img src="../static/img/web/UUITE.jpg" alt="Ilustrasi UU ITE" class="img-fluid rounded">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+
+        <section id= "train" class="container">
+            <h1>Training</h1>
+            <form action="/train" method="POST" enctype="multipart/form-data" class="mb-3" id="train-form">
+                <div class="mb-3">
+                    <label for="num_data">Jumlah Data:</label>
+                    <select name="num_data" id="num_data">
+                        <option value="10" selected>10 Data</option>
+                        <option value="20">20 Data</option>
+                        <option value="30">30 Data</option>
+                        <option value="50">50 Data</option>
+                        <option value="all">All Data</option>
+                    </select>
+                    <label for="train-file" class="form-label">.xlsx</label>
+                    <input type="file" name="file" id="train-file" accept=".xlsx, .xls" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Training</button>
+            </form>
+            <!-- Include SweetAlert2 CSS -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+            
+            <!-- Include SweetAlert2 JS -->
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            
+            <script>
+                document.getElementById('train-form').addEventListener('submit', function(event) {
+                    event.preventDefault(); // Menghentikan aksi bawaan formulir
+            
+                    var fileInput = document.getElementById('train-file');
+                    var file = fileInput.files[0];
+            
+                    if (file) {
+                        // Menampilkan pop-up loading dengan animasi SpinKit
+                        Swal.fire({
+                            title: 'Processing',
+                            html: '<div class="sk-rotating-plane"></div>', // Menggunakan animasi "Rotating Plane" dari SpinKit
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        });
+            
+                        // Melakukan submit formulir secara manual
+                        this.submit();
+            
+                        // Menunggu sampai proses selesai (misalnya, menggunakan timeout simulasi)
+                        setTimeout(function() {
+                            // Menyembunyikan pop-up loading
+                            Swal.close();
+            
+                            // Menampilkan alert bahwa proses selesai
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Proses Selesai',
+                                text: 'Data telah berhasil diproses.',
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'OK'
+                            });
+                        }, 5000); // Misalnya, proses berlangsung selama 5 detik
+                    } else {
+                        // Menampilkan pop-up alert ketika file belum dipilih
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Silakan pilih file terlebih dahulu.',
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            </script>
+            {% if result %}
+                <h2>Hasil Training</h2>
+                <div class="table-responsive result-table">
+                    <table class="table table-bordered" id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kronologi Preprocessed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in range(kronologi|length) %}
+                                <tr>
+                                    <td>{{ no[i] }}</td>
+                                    <td>{{ kronologi[i] }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const rowsPerPage = 5;
+            const table = document.getElementById('dataTable');
+            const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+            const rowCount = rows.length;
+            let currentPage = 1;
+            const pageCount = Math.ceil(rowCount / rowsPerPage);
+
+            function showPage(page) {
+                for (let i = 0; i < rowCount; i++) {
+                    rows[i].style.display = 'none';
+                }
+                for (let i = (page - 1) * rowsPerPage; i < (page * rowsPerPage) && i < rowCount; i++) {
+                    rows[i].style.display = '';
+                }
+            }
+
+            function setupPagination() {
+                document.getElementById('prevPage').addEventListener('click', function (event) {
+                    event.preventDefault();
+                    if (currentPage > 1) {
+                        currentPage--;
+                        showPage(currentPage);
+                    }
+                });
+
+                document.getElementById('nextPage').addEventListener('click', function (event) {
+                    event.preventDefault();
+                    if (currentPage < pageCount) {
+                        currentPage++;
+                        showPage(currentPage);
+                    }
+                });
+            }
+
+            showPage(1);
+            setupPagination();
+        });
+    </script>
+        </section>
+        
+        <section id= "test" class="container">
+              <h1>Testing</h1>
+              <form action="/test" method="POST" enctype="multipart/form-data" class="mb-3" id="test-form">
+                <!-- Tambahkan dropdown untuk memilih jumlah data -->
+                  <div class="mb-3">
+                    <label for="num_data">Jumlah Data:</label>
+                    <select name="num_data" id="num_data">
+                        <option value="10" selected>10 Data</option>
+                        <option value="20">20 Data</option>
+                        <option value="30">30 Data</option>
+                        <option value="50">50 Data</option>
+                        <option value="all">All Data</option>
+                    </select>
+                      <label for="test-file" class="form-label">.xlsx</label>
+                      <input type="file" name="file" id="test-file" accept=".xlsx" class="form-control">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Testing</button>
+              </form>
+              <!-- Include SweetAlert2 CSS -->
+              <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+      
+              <!-- Include SpinKit CSS -->
+              <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spinkit/1.2.5/spinkit.min.css">
+      
+              <!-- Include SweetAlert2 JS -->
+              <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      
+              <script>
+                  document.getElementById('test-form').addEventListener('submit', function(event) {
+                      event.preventDefault(); // Menghentikan aksi bawaan formulir
+                      
+                      var fileInput = document.getElementById('test-file');
+                      var file = fileInput.files[0];
+                      
+                      if (file) {
+                          // Menampilkan pop-up loading dengan animasi SpinKit
+                          Swal.fire({
+                              title: 'Processing',
+                              html: '<div class="sk-rotating-plane"></div>', // Menggunakan animasi "Rotating Plane" dari SpinKit
+                              showConfirmButton: false,
+                              allowOutsideClick: false,
+                              allowEscapeKey: false
+                          });
+      
+                          // Melakukan submit formulir secara manual
+                          this.submit();
+      
+                          // Menunggu sampai proses selesai (misalnya, menggunakan timeout simulasi)
+                          setTimeout(function() {
+                              // Menyembunyikan pop-up loading
+                              Swal.close();
+      
+                              // Menampilkan alert bahwa proses selesai
+                              Swal.fire({
+                                  icon: 'success',
+                                  title: 'Proses Selesai',
+                                  text: 'Data telah berhasil diproses.',
+                                  confirmButtonColor: '#3085d6',
+                                  confirmButtonText: 'OK'
+                              });
+                          }, 10000); // Misalnya, proses berlangsung selama 5 detik
+                      } else {
+                          // Menampilkan pop-up alert ketika file belum dipilih
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Oops...',
+                              text: 'Silakan pilih file terlebih dahulu.',
+                              confirmButtonColor: '#3085d6',
+                              confirmButtonText: 'OK'
+                          });
+                      }
+                  });
+              </script>
+          
+              {% if result_test %}
+              <h2 class="report-title">Tabel Data Prediksi</h2>
+                  <div class="table-responsive result-table">
+                      <table class="table table-bordered">
+                          <thead>
+                              <tr>
+                                  <th>No</th>
+                                  <th>Kronologi Preprocessed</th>
+                                  <th>Pasal 1 Prediksi</th>
+                                  <th>Pasal 2 Prediksi</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              {% for i in range(kronologi_test|length) %}
+                                  <tr>
+                                      <td>{{ no_test[i] }}</td>
+                                      <td>{{ kronologi_test[i] }}</td>
+                                      <td>{{ pasal_1_prediksi_test[i] }}</td>
+                                      <td>{{ pasal_2_prediksi_test[i] }}</td>
+                                  </tr>
+                              {% endfor %}
+                          </tbody>
+                      </table>
+                      <h2 class="report-title">Tabel Data Label</h2>
+                      <div class="table-responsive result-table">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Kronologi Preprocessed</th>
+                                    <th>Pasal 1</th>
+                                    <th>Pasal 2</th>
+                            </thead>
+                            <tbody>
+                                {% for i in range(kronologi_testing|length) %}
+                                    <tr>
+                                        <td>{{ no_test[i] }}</td>
+                                        <td>{{ kronologi_testing[i] }}</td>
+                                        <td>{{ pasal_1_label[i] }}</td>
+                                        <td>{{ pasal_2_label[i] }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                  </div>
+                  <div class="container">
+                    <div class="row report-section">
+                        <div class="col-md-6">
+                            <h2 class="report-title">Classification Report Pasal 1</h2>
+                            <div class="report-content">
+                                {{ report_pasal_1|safe }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h2 class="report-title">Classification Report Pasal 2</h2>
+                            <div class="report-content">
+                                {{ report_pasal_2|safe }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row conf-matrix">
+                        <div class="col-md-6">
+                            <h2 class="report-title">Confusion Matrix Pasal 1</h2>
+                            <img src="{{ url_for('static', filename='conf_matrix_pasal_1.png') }}" alt="Confusion Matrix Pasal 1">
+                        </div>
+                        <div class="col-md-6">
+                            <h2 class="report-title">Confusion Matrix Pasal 2</h2>
+                            <img src="{{ url_for('static', filename='conf_matrix_pasal_2.png') }}" alt="Confusion Matrix Pasal 2">
+                        </div>
+                    </div>
+                </div>
+              {% endif %}
+        </section>
+        <!-- Tambahkan script SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<section id= "predict" class="container">
+    <h1>Prediksi</h1>
+    <form id="prediction-form">
+        <div class="mb-3">
+            <label for="kronologi" class="form-label">Kronologi:</label>
+            <input type="text" id="kronologi" name="kronologi" class="form-control" required>
+            <div class="invalid-feedback">Kronologi harus diisi.</div>
+        </div>
+        <button type="button" onclick="validateAndPredict()" class="btn btn-primary">Prediksi</button>
+    </form>
+    <div id="prediction-result"></div>
+</section>
+
+<script>
+    function validateAndPredict() {
+        var kronologi = document.getElementById("kronologi").value;
+        
+        if (!kronologi.trim()) {
+            // Menggunakan SweetAlert2 untuk menampilkan popup alert
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Mohon isi kronologi terlebih dahulu.',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            });
+            document.getElementById("kronologi").focus();
+            return;
+        }
+
+        predict();
+    }
+
+    function predict() {
+        var kronologi = document.getElementById("kronologi").value;
+        var data = { "kronologi": kronologi };
+
+        fetch('/predict', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            var resultDiv = document.getElementById("prediction-result");
+            var tableHtml = `
+                <h3>Result:</h3>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Kronologi</th>
+                        <th>Pasal 1</th>
+                        <th>Pasal 2</th>
+                    </tr>
+                    <tr>
+                        <td>${kronologi}</td>
+                        <td>${data.pasal_1}</td>
+                        <td>${data.pasal_2}</td>
+                    </tr>
+                </table>
+            `;
+            resultDiv.innerHTML = tableHtml;
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+
+            
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
